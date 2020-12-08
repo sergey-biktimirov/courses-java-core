@@ -1,12 +1,13 @@
-package ru.geekbrains.courses.sbiktimirov.javacore.baselevel.lesson4;
+package ru.geekbrains.courses.sbiktimirov.javacore.baselevel.lesson4.tictaktoe.game;
 
 public abstract class Field {
-    Cell[][] cellList;
+    public Cell[][] cellList;
 
     /**
      * Размер поля
      */
-    int width, height;
+    public int width;
+    public int height;
 
     /**
      * Конструктор для не квадратного поля
@@ -28,8 +29,8 @@ public abstract class Field {
         width = height = size;
     }
 
-    abstract void createField();
+    public abstract void createField();
 
-    abstract void paintField();
+    public abstract void paintField();
 
 }

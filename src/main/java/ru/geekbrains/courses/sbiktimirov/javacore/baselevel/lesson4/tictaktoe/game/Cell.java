@@ -1,4 +1,4 @@
-package ru.geekbrains.courses.sbiktimirov.javacore.baselevel.lesson4;
+package ru.geekbrains.courses.sbiktimirov.javacore.baselevel.lesson4.tictaktoe.game;
 
 public abstract class Cell {
     /**
@@ -20,7 +20,7 @@ public abstract class Cell {
     /**
      * Ссылка на правую ячейку
      */
-    Cell tightCell;
+    Cell rightCell;
     /**
      * Текущее положение ячейки по осям x и y.
      * По умолчанию -1, не задано.
@@ -49,9 +49,8 @@ public abstract class Cell {
     }
 
     private void lookAround() {
-
     }
 
-    abstract void paint();
+    public abstract void paint();
 
 }

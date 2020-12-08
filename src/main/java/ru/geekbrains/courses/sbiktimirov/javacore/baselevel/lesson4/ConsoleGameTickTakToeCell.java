@@ -1,11 +1,9 @@
 package ru.geekbrains.courses.sbiktimirov.javacore.baselevel.lesson4;
 
-public class TickTakToe {
-}
+import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.lesson4.tictaktoe.game.Cell;
+import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.lesson4.tictaktoe.game.Field;
 
-
-class TickTakToeCell extends Cell {
-
+class ConsoleGameTickTakToeCell extends Cell {
 
     /**
      * Символьное обозначение значение ячейки:
@@ -22,38 +20,12 @@ class TickTakToeCell extends Cell {
      * @param x     Координата по оси x
      * @param y     Координата по оси y
      */
-    public TickTakToeCell(Field field, int x, int y) {
+    public ConsoleGameTickTakToeCell(Field field, int x, int y) {
         super(field, x, y);
     }
 
     @Override
-    void paint() {
-
-    }
-}
-
-class TickTakToeField extends Field {
-
-    public TickTakToeField(int width, int height) {
-        super(width, height);
-    }
-
-    public TickTakToeField(int size) {
-        super(size);
-    }
-
-    @Override
-    void createField() {
-        cellList = new Cell[width][height];
-        for (int i = 0; i < cellList.length; i++) {
-            for (int j = 0; j < cellList.length; j++) {
-                cellList[i][j] = new TickTakToeCell(this, j, i);
-            }
-        }
-    }
-
-    @Override
-    void paintField() {
+    public void paint() {
 
     }
 }
