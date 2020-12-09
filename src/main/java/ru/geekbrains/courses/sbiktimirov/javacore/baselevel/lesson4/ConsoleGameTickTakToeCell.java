@@ -28,4 +28,8 @@ class ConsoleGameTickTakToeCell extends Cell {
     public void paint() {
 
     }
+
+    public char getChar(){
+        return charList[value];
+    }
 }

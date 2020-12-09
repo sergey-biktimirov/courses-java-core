@@ -33,7 +33,7 @@ public abstract class Cell {
      * 1, в ячейке нолик
      * 2, в ячейке крестик
      */
-    int value = 0;
+    public int value = 0;
 
     /**
      * Главный конструктор
