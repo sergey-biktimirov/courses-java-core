@@ -10,6 +10,11 @@ public abstract class Field {
     public int height;
 
     /**
+     * Игра окончена - true - Да, false - Нет
+     * */
+    public boolean isGameOver = false;
+
+    /**
      * Конструктор для не квадратного поля
      *
      * @param width  ширина поля (в ячейках)
@@ -29,7 +34,14 @@ public abstract class Field {
         width = height = size;
     }
 
-    public abstract void createField();
+    public void createField(){
+        cellList = new Cell[height][width];
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                cellList[i][j] = new Cell(this, j, i);
+            }
+        }
+    };
 
     public abstract void paintField();
 

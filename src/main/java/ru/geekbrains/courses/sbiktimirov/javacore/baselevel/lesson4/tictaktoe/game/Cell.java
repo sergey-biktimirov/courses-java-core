@@ -1,6 +1,8 @@
 package ru.geekbrains.courses.sbiktimirov.javacore.baselevel.lesson4.tictaktoe.game;
 
-public abstract class Cell {
+import java.util.Arrays;
+
+public class Cell {
     /**
      * Ссылка на поле
      */
@@ -8,19 +10,35 @@ public abstract class Cell {
     /**
      * Ссылка левую ячейку
      */
-    Cell leftCell;
+    private Cell leftCell;
+    /**
+     * Ссылка на верхнюю левую ячейку
+     */
+    private Cell topLeftCell;
     /**
      * Ссылка на верхнюю ячейку
      */
-    Cell topCell;
+    private Cell topCell;
+    /**
+     * Ссылка на верхнюю правую ячейку
+     */
+    private Cell topRightCell;
+    /**
+     * Ссылка нижнюю левую ячейку
+     */
+    private Cell bottomLeftCell;
     /**
      * Ссылка нижнюю ячейку
      */
-    Cell bottomCell;
+    private Cell bottomCell;
+    /**
+     * Ссылка нижнюю правую ячейку
+     */
+    private Cell bottomRightCell;
     /**
      * Ссылка на правую ячейку
      */
-    Cell rightCell;
+    private Cell rightCell;
     /**
      * Текущее положение ячейки по осям x и y.
      * По умолчанию -1, не задано.
@@ -33,7 +51,7 @@ public abstract class Cell {
      * 1, в ячейке нолик
      * 2, в ячейке крестик
      */
-    public int value = 0;
+    private int value = 0;
 
     /**
      * Главный конструктор
@@ -48,9 +66,38 @@ public abstract class Cell {
         this.y = y;
     }
 
+    /**
+     * Обзор ячеек вокруг текущей
+     */
     private void lookAround() {
+        leftCell = x - 1 >= 0 ? field.cellList[y][x - 1] : null;
+
+        rightCell = x + 1 < field.width ? field.cellList[y][x + 1] : null;
+
+        topLeftCell = x - 1 >= 0 && y - 1 >= 0 ? field.cellList[y - 1][x - 1] : null;
+
+        topCell = y - 1 >= 0 ? field.cellList[y - 1][x] : null;
+
+        topRightCell = y - 1 >= 0 && x + 1 < field.width ? field.cellList[y - 1][x + 1] : null;
+
+        bottomLeftCell = y + 1 < field.height && x - 1 >= 0 ? field.cellList[y + 1][x - 1] : null;
+
+        bottomCell = y + 1 < field.height ? field.cellList[y + 1][x] : null;
+
+        bottomRightCell = y + 1 < field.height && x + 1 < field.width ? field.cellList[y + 1][x + 1] : null;
     }
 
-    public abstract void paint();
+    public void setValue(int value) {
+        this.value = value;
+        lookAround();
+        findWinner();
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    private void findWinner() {
+    }
 
 }

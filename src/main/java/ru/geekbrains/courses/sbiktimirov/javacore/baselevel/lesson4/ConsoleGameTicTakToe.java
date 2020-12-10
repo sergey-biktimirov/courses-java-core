@@ -1,28 +1,24 @@
 package ru.geekbrains.courses.sbiktimirov.javacore.baselevel.lesson4;
 
 import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.lesson4.tictaktoe.game.TicTakToe;
+import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.lesson4.tictaktoe.game.error.CellIsNotEmptyException;
 import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.lesson4.tictaktoe.game.error.ToManyPlayersException;
 import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.lesson4.tictaktoe.game.error.ToSmallFieldSizeException;
+import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.lesson4.tictaktoe.game.error.WrongCoordinateException;
 
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.Scanner;
 
 class ConsoleGameTicTakToe extends TicTakToe {
 
     Scanner scanner;
-    ConsoleGameTickTakToeField field = new ConsoleGameTickTakToeField();
+    ConsoleGameTickTakToeField consoleField = new ConsoleGameTickTakToeField(3);
     /**
      * Текущий ход
      * move[0] - координата x
      * move[1] - координата y
      * */
     int[] move = {-1, -2};
-
-    /**
-     * Кто ходит - false крестик, true нолик
-     * */
-    boolean zeroMove = false;
 
     public ConsoleGameTicTakToe(InputStream is) {
         super();
@@ -42,29 +38,53 @@ class ConsoleGameTicTakToe extends TicTakToe {
 
     public void startConsoleGame() {
         field.paintField();
-        printWhoIsMove();
+        makeMove();
         while (scanner.hasNext()){
-            System.out.println("Введите номер колонки");
-            inputMsg();
-            int
-            System.out.println("Введите номер строки");
-            inputMsg();
+            makeMove();
         }
     }
 
     public void printWhoIsMove() {
-        System.out.printf("Ходит %s: %n", zeroMove ? " \"0\"" : " \"X\"");
+        System.out.printf("Ходит %s: %n", isZeroMove ? " \"0\"" : " \"X\"");
     }
 
     public void enterX(){
         try{
-
+            System.out.println("Введите номер колонки");
+            inputMsg();
+            move[0] = playerInput() - 1;
+            checkXCoordinate(move[0]);
+        } catch (WrongCoordinateException e){
+            printErr(e.getLocalizedMessage());
+            enterX();
         }
     }
 
 
-    public void makeMove() {
+    public void enterY(){
+        try{
+            System.out.println("Введите номер строки");
+            inputMsg();
+            move[1] = playerInput() - 1;
+            checkYCoordinate(move[1]);
+        } catch (WrongCoordinateException e){
+            printErr(e.getLocalizedMessage());
+            enterY();
+        }
+    }
 
+    public void makeMove() {
+        printWhoIsMove();
+        enterX();
+        enterY();
+        try {
+            super.makeMove(move[0], move[1]);
+            field.paintField();
+            makeMove();
+        } catch (CellIsNotEmptyException | WrongCoordinateException e) {
+            printErr(e.getLocalizedMessage());
+            makeMove();
+        }
     }
 
 
@@ -88,7 +108,7 @@ class ConsoleGameTicTakToe extends TicTakToe {
      * Обработка ввода количества игроков.
      */
     private void enterPlayerCountMsg() {
-        System.out.println("Введите колисество игроков (максимум 2 игрока).");
+        System.out.println("Введите количество игроков (максимум 2 игрока).");
         inputMsg();
         try {
             setPlayerCount(playerInput());
@@ -103,8 +123,14 @@ class ConsoleGameTicTakToe extends TicTakToe {
      */
     private void enterFieldSizeMsg() {
         System.out.println("Введите размер поля, поле должно иметь размер больше 3x3 ячейки.");
+        try {
+            setField(consoleField);
+        } catch (ToSmallFieldSizeException e) {
+            e.printStackTrace();
+        }
         enterFieldWidth();
         enterFieldHeight();
+        field.createField();
     }
 
     /**
@@ -157,6 +183,11 @@ class ConsoleGameTicTakToe extends TicTakToe {
     public void newGame() {
         enterPlayerCountMsg();
         enterFieldSizeMsg();
+        try {
+            setField(field);
+        } catch (ToSmallFieldSizeException e) {
+            e.printStackTrace();
+        }
         startConsoleGame();
         try {
             setField(field);
@@ -194,12 +225,16 @@ class ConsoleGameTicTakToe extends TicTakToe {
      * */
     private int playerInput() {
         String line = scanner.nextLine().trim();
-        if (line.equals("/q")) {
-            exitGame();
-        } else if (line.equals("/n")) {
-            newGame();
-        } else if (line.equals("/m")) {
-            printMenu();
+        switch (line) {
+            case "/q":
+                exitGame();
+                break;
+            case "/n":
+                newGame();
+                break;
+            case "/m":
+                printMenu();
+                break;
         }
         int n = -1;
         try {

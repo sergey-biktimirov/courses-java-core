@@ -24,12 +24,7 @@ class ConsoleGameTickTakToeCell extends Cell {
         super(field, x, y);
     }
 
-    @Override
-    public void paint() {
-
-    }
-
     public char getChar(){
-        return charList[value];
+        return charList[getValue()];
     }
 }
