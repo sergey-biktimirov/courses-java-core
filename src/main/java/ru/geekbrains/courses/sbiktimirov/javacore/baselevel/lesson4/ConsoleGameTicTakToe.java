@@ -45,7 +45,7 @@ class ConsoleGameTicTakToe extends TicTakToe {
     }
 
     public void printWhoIsMove() {
-        System.out.printf("Ходит %s: %n", isZeroMove ? " \"0\"" : " \"X\"");
+        System.out.printf("Ходит %s: %n", field.isZeroMove ? " \"0\"" : " \"X\"");
     }
 
     public void enterX(){
@@ -53,7 +53,7 @@ class ConsoleGameTicTakToe extends TicTakToe {
             System.out.println("Введите номер колонки");
             inputMsg();
             move[0] = playerInput() - 1;
-            checkXCoordinate(move[0]);
+            field.checkXCoordinate(move[0]);
         } catch (WrongCoordinateException e){
             printErr(e.getLocalizedMessage());
             enterX();
@@ -66,7 +66,7 @@ class ConsoleGameTicTakToe extends TicTakToe {
             System.out.println("Введите номер строки");
             inputMsg();
             move[1] = playerInput() - 1;
-            checkYCoordinate(move[1]);
+            field.checkYCoordinate(move[1]);
         } catch (WrongCoordinateException e){
             printErr(e.getLocalizedMessage());
             enterY();

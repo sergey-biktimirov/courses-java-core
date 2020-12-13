@@ -90,14 +90,10 @@ public class Cell {
     public void setValue(int value) {
         this.value = value;
         lookAround();
-        findWinner();
     }
 
     public int getValue() {
         return value;
-    }
-
-    private void findWinner() {
     }
 
 }

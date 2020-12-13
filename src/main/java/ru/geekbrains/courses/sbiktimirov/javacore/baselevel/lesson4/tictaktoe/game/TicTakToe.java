@@ -12,10 +12,6 @@ public abstract class TicTakToe {
 
     public Field field;
     private int playerCount;
-    /**
-     * Кто ходит - false крестик, true нолик
-     * */
-    public boolean isZeroMove = false;
 
     public Field getField() {
         return field;
@@ -45,28 +41,7 @@ public abstract class TicTakToe {
     }
 
     public void makeMove(int x, int y) throws WrongCoordinateException, CellIsNotEmptyException {
-        checkXCoordinate(x);
-        checkYCoordinate(y);
-        checkCell(x, y);
-        field.cellList[y][x].setValue((isZeroMove = !isZeroMove) ? 2 : 1);
-    }
-
-    private void checkCell(int x, int y) throws CellIsNotEmptyException {
-        if(field.cellList[y][x].getValue() != 0){
-            throw new CellIsNotEmptyException("Ячейка уже занята, укажите другую");
-        }
-    }
-
-    public void checkXCoordinate(int coordinate) throws WrongCoordinateException {
-        if (coordinate < 0 || coordinate >= field.width){
-            throw new WrongCoordinateException("Значение выходит за пределы поля");
-        }
-    }
-
-    public void checkYCoordinate(int coordinate) throws WrongCoordinateException {
-        if (coordinate < 0 || coordinate >= field.height){
-            throw new WrongCoordinateException("Значение выходит за пределы поля");
-        }
+        field.makeMove(x, y);
     }
 
 }
