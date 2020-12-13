@@ -21,17 +21,17 @@ public class Dog extends Animal {
 
     @Override
     public boolean run(double v) {
-        return v <= MAX_RUN_DISTANCE;
+        return v > 0 && v <= MAX_RUN_DISTANCE;
     }
 
     @Override
     public boolean swim(double v) {
-        return v <= MAX_SWIM_DISTANCE;
+        return v > 0 && v <= MAX_SWIM_DISTANCE;
     }
 
     @Override
     public boolean jump(double v) {
-        return v <= MAX_JUMP_DISTANCE;
+        return v > 0 && v <= MAX_JUMP_DISTANCE;
     }
 
     @Override
