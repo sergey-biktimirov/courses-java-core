@@ -17,7 +17,7 @@ class ConsoleGameTicTakToe extends TicTakToe {
      * Текущий ход
      * move[0] - координата x
      * move[1] - координата y
-     * */
+     */
     int[] move = {-1, -2};
 
     public ConsoleGameTicTakToe(InputStream is) {
@@ -38,36 +38,42 @@ class ConsoleGameTicTakToe extends TicTakToe {
 
     public void startConsoleGame() {
         field.paintField();
-        makeMove();
-        while (scanner.hasNext()){
+        while (!field.isGameOver || field.movesLeft != 0) {
             makeMove();
         }
+
+        if (field.isHadWinner) {
+            System.out.printf("Победил %s: %n", field.isZeroMove ? " \"0\"" : " \"X\"");
+        } else {
+            System.out.println("Победила дружба! \\U1F60A");
+        }
+
     }
 
     public void printWhoIsMove() {
         System.out.printf("Ходит %s: %n", field.isZeroMove ? " \"0\"" : " \"X\"");
     }
 
-    public void enterX(){
-        try{
+    public void enterX() {
+        try {
             System.out.println("Введите номер колонки");
             inputMsg();
             move[0] = playerInput() - 1;
             field.checkXCoordinate(move[0]);
-        } catch (WrongCoordinateException e){
+        } catch (WrongCoordinateException e) {
             printErr(e.getLocalizedMessage());
             enterX();
         }
     }
 
 
-    public void enterY(){
-        try{
+    public void enterY() {
+        try {
             System.out.println("Введите номер строки");
             inputMsg();
             move[1] = playerInput() - 1;
             field.checkYCoordinate(move[1]);
-        } catch (WrongCoordinateException e){
+        } catch (WrongCoordinateException e) {
             printErr(e.getLocalizedMessage());
             enterY();
         }
@@ -222,7 +228,7 @@ class ConsoleGameTicTakToe extends TicTakToe {
 
     /**
      * Обработка ввода игрока.
-     * */
+     */
     private int playerInput() {
         String line = scanner.nextLine().trim();
         switch (line) {
@@ -239,7 +245,7 @@ class ConsoleGameTicTakToe extends TicTakToe {
         int n = -1;
         try {
             n = Integer.parseInt(line);
-        } catch (Exception e){
+        } catch (Exception e) {
             printErr("Введено не число, введите число.");
         }
         return n;

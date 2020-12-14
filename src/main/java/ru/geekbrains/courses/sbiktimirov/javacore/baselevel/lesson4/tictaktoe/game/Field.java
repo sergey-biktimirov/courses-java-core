@@ -16,10 +16,26 @@ public abstract class Field {
      * Игра окончена - true - Да, false - Нет
      */
     public boolean isGameOver = false;
+
     /**
      * Кто ходит - false крестик, true нолик
      */
     public boolean isZeroMove = false;
+
+    /**
+     * Победитель - 0 - Нет победителя, 1 - победитель нолик, 2 - победитель крестик
+     */
+    public int winner = 0;
+
+    /**
+     * Есть победитель? - true - Да, false - Нет.
+     */
+    public boolean isHadWinner = false;
+
+    /**
+     * Осталось ходов
+     */
+    public int movesLeft = 0;
 
     /**
      * Конструктор для не квадратного поля
@@ -30,6 +46,7 @@ public abstract class Field {
     public Field(int width, int height) {
         this.width = width;
         this.height = height;
+        setMovesLeft();
     }
 
     /**
@@ -39,9 +56,11 @@ public abstract class Field {
      */
     public Field(int size) {
         width = height = size;
+        setMovesLeft();
     }
 
     public void createField() {
+        setMovesLeft();
         cellList = new Cell[height][width];
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
@@ -50,26 +69,21 @@ public abstract class Field {
         }
     }
 
-    ;
+    private void setMovesLeft() {
+        this.movesLeft = width * height;
+    }
 
     public abstract void paintField();
-
-    private void findWinner() {
-
-    }
-
-    public void nextRoboMove() {
-
-    }
 
     public void makeMove(int x, int y) throws WrongCoordinateException, CellIsNotEmptyException {
         checkXCoordinate(x);
         checkYCoordinate(y);
         checkCell(x, y);
         this.cellList[y][x].setValue((isZeroMove = !isZeroMove) ? 2 : 1);
+        movesLeft -= 1;
     }
 
-    private void checkCell(int x, int y) throws CellIsNotEmptyException {
+    void checkCell(int x, int y) throws CellIsNotEmptyException {
         if (this.cellList[y][x].getValue() != 0) {
             throw new CellIsNotEmptyException("Ячейка уже занята, укажите другую");
         }
