@@ -1,9 +1,6 @@
 package ru.geekbrains.courses.sbiktimirov.javacore.baselevel.lesson4.tictaktoe.game;
 
-import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.lesson4.tictaktoe.game.error.CellIsNotEmptyException;
-import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.lesson4.tictaktoe.game.error.ToManyPlayersException;
-import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.lesson4.tictaktoe.game.error.ToSmallFieldSizeException;
-import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.lesson4.tictaktoe.game.error.WrongCoordinateException;
+import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.lesson4.tictaktoe.game.error.*;
 
 public abstract class TicTakToe {
 
@@ -40,8 +37,11 @@ public abstract class TicTakToe {
         }
     }
 
-    public void makeMove(int x, int y) throws WrongCoordinateException, CellIsNotEmptyException {
+    public void makeMove(int x, int y) throws WrongCoordinateException, CellIsNotEmptyException, TickTacToeGameOverException {
         field.makeMove(x, y);
     }
 
+    public void startGame() {
+        field.createField();
+    }
 }

@@ -1,10 +1,7 @@
 package ru.geekbrains.courses.sbiktimirov.javacore.baselevel.lesson4;
 
 import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.lesson4.tictaktoe.game.TicTakToe;
-import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.lesson4.tictaktoe.game.error.CellIsNotEmptyException;
-import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.lesson4.tictaktoe.game.error.ToManyPlayersException;
-import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.lesson4.tictaktoe.game.error.ToSmallFieldSizeException;
-import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.lesson4.tictaktoe.game.error.WrongCoordinateException;
+import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.lesson4.tictaktoe.game.error.*;
 
 import java.io.InputStream;
 import java.util.Scanner;
@@ -19,6 +16,11 @@ class ConsoleGameTicTakToe extends TicTakToe {
      * move[1] - координата y
      */
     int[] move = {-1, -2};
+
+    /**
+     * Символы игроков
+     * */
+    private char[] playerChar = ConsoleGameTickTakToeCell.charList;
 
     public ConsoleGameTicTakToe(InputStream is) {
         super();
@@ -36,24 +38,44 @@ class ConsoleGameTicTakToe extends TicTakToe {
         System.exit(0);
     }
 
+    /**
+     * Запуск игры
+     * */
     public void startConsoleGame() {
+        super.startGame();
         field.paintField();
         while (!field.isGameOver || field.movesLeft != 0) {
             makeMove();
         }
 
-        if (field.isHadWinner) {
-            System.out.printf("Победил %s: %n", field.isZeroMove ? " \"0\"" : " \"X\"");
-        } else {
-            System.out.println("Победила дружба! \\U1F60A");
-        }
-
     }
 
+
+    /**
+     * Получить символ игрока выполняющего ход
+     * */
+    public char getPlayerChar() {
+        return playerChar[field.getPlayerTurn()];
+    }
+
+    /**
+     * Получить символ игрока выполняющего ход
+     * @param i - номер символа игрока 0 - пустое поле, 1 - нолик, 2 - крестик
+     * */
+    public char getPlayerChar(int i) {
+        return playerChar[i];
+    }
+
+    /**
+     * Сообщение для игрока выполняющего ход
+     * */
     public void printWhoIsMove() {
-        System.out.printf("Ходит %s: %n", field.isZeroMove ? " \"0\"" : " \"X\"");
+        System.out.printf("Ходит %s: %n", getPlayerChar());
     }
 
+    /**
+     * Диалог ввода номера строки поля
+     * */
     public void enterX() {
         try {
             System.out.println("Введите номер колонки");
@@ -67,6 +89,9 @@ class ConsoleGameTicTakToe extends TicTakToe {
     }
 
 
+    /**
+     * Диалог ввода номера строки поля
+     * */
     public void enterY() {
         try {
             System.out.println("Введите номер строки");
@@ -79,6 +104,9 @@ class ConsoleGameTicTakToe extends TicTakToe {
         }
     }
 
+    /**
+     * Диалог выполнения хода]
+     * */
     public void makeMove() {
         printWhoIsMove();
         enterX();
@@ -90,9 +118,25 @@ class ConsoleGameTicTakToe extends TicTakToe {
         } catch (CellIsNotEmptyException | WrongCoordinateException e) {
             printErr(e.getLocalizedMessage());
             makeMove();
+        } catch (TickTacToeGameOverException e) {
+            gameOver(e);
         }
     }
 
+    /**
+     * Обработка завершения игры
+     */
+    public void gameOver(TickTacToeGameOverException gameOver) {
+        field.paintField();
+        printErr(gameOver.getLocalizedMessage());
+        if (gameOver.getWinner() != 0) {
+            System.out.printf("Победил %s: %n", getPlayerChar(gameOver.getWinner()));
+        } else {
+            System.out.println("Победила дружба!");
+        }
+        printMenu();
+        newGame();
+    }
 
     /**
      * Вывод в консоль сообщения приветсвия.
@@ -136,7 +180,6 @@ class ConsoleGameTicTakToe extends TicTakToe {
         }
         enterFieldWidth();
         enterFieldHeight();
-        field.createField();
     }
 
     /**
@@ -192,15 +235,10 @@ class ConsoleGameTicTakToe extends TicTakToe {
         try {
             setField(field);
         } catch (ToSmallFieldSizeException e) {
-            e.printStackTrace();
-        }
-        startConsoleGame();
-        try {
-            setField(field);
-        } catch (ToSmallFieldSizeException e) {
             printErr(e.getLocalizedMessage());
             newGame();
         }
+        startConsoleGame();
     }
 
     /**

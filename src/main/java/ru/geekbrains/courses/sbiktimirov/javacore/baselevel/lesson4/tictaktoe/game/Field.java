@@ -1,6 +1,7 @@
 package ru.geekbrains.courses.sbiktimirov.javacore.baselevel.lesson4.tictaktoe.game;
 
 import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.lesson4.tictaktoe.game.error.CellIsNotEmptyException;
+import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.lesson4.tictaktoe.game.error.TickTacToeGameOverException;
 import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.lesson4.tictaktoe.game.error.WrongCoordinateException;
 
 public abstract class Field {
@@ -59,7 +60,14 @@ public abstract class Field {
         setMovesLeft();
     }
 
+    /**
+     * Создание поле
+     */
     public void createField() {
+        isGameOver = false;
+        isZeroMove = false;
+        winner = 0;
+        isHadWinner = false;
         setMovesLeft();
         cellList = new Cell[height][width];
         for (int i = 0; i < height; i++) {
@@ -69,34 +77,85 @@ public abstract class Field {
         }
     }
 
-    private void setMovesLeft() {
+    /**
+     * Установка остатка ходов
+     */
+    protected void setMovesLeft() {
         this.movesLeft = width * height;
     }
 
+    /**
+     *
+     */
     public abstract void paintField();
 
-    public void makeMove(int x, int y) throws WrongCoordinateException, CellIsNotEmptyException {
+    /**
+     * Сделать ход
+     *
+     * @param x Координата по оси x
+     * @param y Координата по оси y
+     * @throws WrongCoordinateException - если введены не корректные координаты
+     * @throws CellIsNotEmptyException  - если в ячейку был сделан ход
+     */
+    public void makeMove(int x, int y) throws WrongCoordinateException, CellIsNotEmptyException, TickTacToeGameOverException {
         checkXCoordinate(x);
         checkYCoordinate(y);
         checkCell(x, y);
-        this.cellList[y][x].setValue((isZeroMove = !isZeroMove) ? 2 : 1);
+        this.cellList[y][x].setValue(getPlayerTurn());
         movesLeft -= 1;
+        if (isGameOver || movesLeft == 0) {
+            throw new TickTacToeGameOverException("Игра окончена", winner);
+        }
+        setPlayerTurn();
     }
 
+    /**
+     * Получить значение игрока, который должен выполнить ход
+     */
+    public int getPlayerTurn() {
+        return isZeroMove ? 1 : 2;
+    }
+
+    /**
+     * Переключить ход игрока
+     */
+    private void setPlayerTurn() {
+        isZeroMove = !isZeroMove;
+    }
+
+    /**
+     * Проверка был ли выполнен ход в ячейку
+     *
+     * @param x Координата по оси x
+     * @param y Координата по оси y
+     * @throws CellIsNotEmptyException - если в ячейку был сделан ход
+     */
     void checkCell(int x, int y) throws CellIsNotEmptyException {
         if (this.cellList[y][x].getValue() != 0) {
             throw new CellIsNotEmptyException("Ячейка уже занята, укажите другую");
         }
     }
 
-    public void checkXCoordinate(int coordinate) throws WrongCoordinateException {
-        if (coordinate < 0 || coordinate >= this.width) {
+    /**
+     * Проверка координаты по оси x
+     *
+     * @param x Координата по оси x
+     * @throws WrongCoordinateException - если введены не корректные координаты
+     */
+    public void checkXCoordinate(int x) throws WrongCoordinateException {
+        if (x < 0 || x >= this.width) {
             throw new WrongCoordinateException("Значение выходит за пределы поля");
         }
     }
 
-    public void checkYCoordinate(int coordinate) throws WrongCoordinateException {
-        if (coordinate < 0 || coordinate >= this.height) {
+    /**
+     * Проверка координаты по оси y
+     *
+     * @param y Координата по оси y
+     * @throws WrongCoordinateException - если введены не корректные координаты
+     */
+    public void checkYCoordinate(int y) throws WrongCoordinateException {
+        if (y < 0 || y >= this.height) {
             throw new WrongCoordinateException("Значение выходит за пределы поля");
         }
     }

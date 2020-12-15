@@ -75,10 +75,6 @@ public class Cell {
 
     private void findWinner() {
         int[][] cells = getAroundCellsValues(this);
-        System.out.println("");
-        for (int[] cell : cells) {
-            System.out.println(Arrays.toString(cell));
-        }
 
         // Счетчик занятых ячеек для подсчета победы, снизу в верх.
         int winScoreFromTopToBottom = 0;
@@ -126,7 +122,6 @@ public class Cell {
     private void setWinner() {
         field.winner = value;
         field.isGameOver = true;
-        field.isHadWinner = true;
     }
 
     private int[][] getAroundCellsValues(Cell cell) {

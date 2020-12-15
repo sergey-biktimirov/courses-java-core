@@ -14,6 +14,11 @@ public class ConsoleGameTickTakToeField extends Field {
 
     @Override
     public void createField() {
+        isGameOver = false;
+        isZeroMove = false;
+        winner = 0;
+        isHadWinner = false;
+        setMovesLeft();
         cellList = new ConsoleGameTickTakToeCell[height][width];
         colWidth = String.valueOf(width).length();
         rowHeight = String.valueOf(height).length();

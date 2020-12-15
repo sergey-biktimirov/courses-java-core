@@ -11,7 +11,7 @@ class ConsoleGameTickTakToeCell extends Cell {
      * 1, в ячейке нолик - '0'
      * 2, в ячейке крестик - 'X'
      */
-    char[] charList = {'•', '0', 'X'};
+    static char[] charList = {'•', '0', 'X'};
 
     /**
      * Главный конструктор
