@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="178.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.geekbrains.courses.sbiktimirov.javacore.baselevel.lesson8.Controller">
+   <bottom>
+      <AnchorPane BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="nextRandomButton" layoutX="117.0" layoutY="5.0" mnemonicParsing="false" text="Генерить" AnchorPane.bottomAnchor="5.0" AnchorPane.topAnchor="5.0" />
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </AnchorPane>
+   </bottom>
+   <center>
+      <AnchorPane BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="minRandomValueTextField" layoutY="124.0" prefHeight="25.0" prefWidth="140.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" />
+            <TextField fx:id="maxRandomValueTextField" layoutX="149.0" layoutY="124.0" prefWidth="140.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="98.0" prefHeight="26.0" prefWidth="148.0" text="От числа" textAlignment="CENTER" AnchorPane.bottomAnchor="30.0" />
+            <TextField fx:id="randomResultTextField" editable="false" layoutX="62.0" layoutY="62.0" prefHeight="25.0" prefWidth="226.0" AnchorPane.rightAnchor="5.0" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="150.0" layoutY="99.0" prefHeight="25.0" prefWidth="150.0" text="По число" textAlignment="CENTER" AnchorPane.bottomAnchor="30.0" />
+            <Label alignment="CENTER" layoutY="1.0" prefHeight="22.0" prefWidth="300.0" text="Генератор случайных чисел" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="-1.0" layoutY="62.0" prefHeight="24.0" prefWidth="63.0" text="Результат" AnchorPane.leftAnchor="5.0" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
