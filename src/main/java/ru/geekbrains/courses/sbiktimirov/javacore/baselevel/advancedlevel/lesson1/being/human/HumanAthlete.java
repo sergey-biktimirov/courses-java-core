@@ -4,7 +4,6 @@ import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson
 import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.sport.athletics.Athlete;
 import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.sport.Treadmill;
 import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.sport.Wall;
-import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.thing.robot.RobotAthlete;
 
 /**
  * Человек спортсмен

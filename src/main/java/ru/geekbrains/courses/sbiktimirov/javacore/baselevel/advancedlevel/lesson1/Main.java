@@ -1,7 +1,5 @@
 package ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1;
 
-import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.being.action.Jump;
-import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.being.action.Run;
 import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.being.animal.CatAthlete;
 import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.being.human.Gender;
 import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.being.human.HumanAthlete;

@@ -1,9 +1,5 @@
 package ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.being.animal;
 
-import ru.geekbrains.courses.sbiktimirov.utl.StringUtl;
-
-import static ru.geekbrains.courses.sbiktimirov.utl.MathUtl.nextRandomDouble;
-
 public class Cat extends Animal {
 
     public Cat(String name, String color) {

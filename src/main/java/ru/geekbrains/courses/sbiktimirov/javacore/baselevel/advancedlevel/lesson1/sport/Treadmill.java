@@ -1,5 +1,8 @@
 package ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.sport;
 
+/**
+ * Беговая дорожка
+ */
 public class Treadmill extends Hurdle {
     /**
      * Конструктор

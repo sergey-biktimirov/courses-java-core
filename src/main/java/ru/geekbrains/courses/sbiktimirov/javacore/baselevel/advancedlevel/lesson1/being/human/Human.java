@@ -2,7 +2,6 @@ package ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesso
 
 import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.being.action.Jump;
 import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.being.action.Run;
-import ru.geekbrains.courses.sbiktimirov.utl.StringUtl;
 
 /**
  * Человек
