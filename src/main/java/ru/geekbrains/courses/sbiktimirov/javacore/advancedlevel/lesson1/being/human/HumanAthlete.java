@@ -1,9 +1,9 @@
-package ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.being.human;
+package ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson1.being.human;
 
-import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.sport.Hurdle;
-import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.sport.athletics.Athlete;
-import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.sport.Treadmill;
-import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.sport.Wall;
+import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson1.sport.Hurdle;
+import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson1.sport.Treadmill;
+import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson1.sport.athletics.Athlete;
+import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson1.sport.Wall;
 
 /**
  * Человек спортсмен

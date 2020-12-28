@@ -1,13 +1,13 @@
-package ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1;
+package ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson1;
 
-import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.being.animal.CatAthlete;
-import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.being.human.Gender;
-import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.being.human.HumanAthlete;
-import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.sport.Hurdle;
-import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.sport.Treadmill;
-import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.sport.Wall;
-import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.sport.athletics.Athlete;
-import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.thing.robot.RobotAthlete;
+import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson1.being.animal.CatAthlete;
+import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson1.sport.athletics.Athlete;
+import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson1.thing.robot.RobotAthlete;
+import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson1.being.human.Gender;
+import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson1.being.human.HumanAthlete;
+import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson1.sport.Hurdle;
+import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson1.sport.Treadmill;
+import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson1.sport.Wall;
 import ru.geekbrains.courses.sbiktimirov.utl.StringUtl;
 
 import java.util.Arrays;

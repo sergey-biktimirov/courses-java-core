@@ -1,4 +1,4 @@
-package ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.sport;
+package ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson1.sport;
 
 /**
  * Беговая дорожка

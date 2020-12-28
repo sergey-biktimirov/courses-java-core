@@ -1,4 +1,4 @@
-package ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.thing.robot;
+package ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson1.thing.robot;
 
 /**
  * Робот

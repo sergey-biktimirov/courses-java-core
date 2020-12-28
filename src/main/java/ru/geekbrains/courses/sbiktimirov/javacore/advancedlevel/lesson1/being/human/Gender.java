@@ -1,4 +1,4 @@
-package ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.being.human;
+package ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson1.being.human;
 
 /**
  * Пол

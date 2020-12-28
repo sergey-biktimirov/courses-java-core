@@ -1,4 +1,4 @@
-package ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.being.animal;
+package ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson1.being.animal;
 
 public class Cat extends Animal {
 

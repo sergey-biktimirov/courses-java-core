@@ -1,7 +1,7 @@
-package ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.thing.robot;
+package ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson1.thing.robot;
 
-import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.being.action.Jump;
-import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.being.action.Run;
+import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson1.being.action.Jump;
+import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson1.being.action.Run;
 
 /**
  * Человеко подобный робот

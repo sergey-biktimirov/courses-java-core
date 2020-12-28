@@ -1,6 +1,6 @@
-package ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.sport.athletics;
+package ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson1.sport.athletics;
 
-import ru.geekbrains.courses.sbiktimirov.javacore.baselevel.advancedlevel.lesson1.sport.Hurdle;
+import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson1.sport.Hurdle;
 
 /**
  * Спортивные качества
