@@ -10,8 +10,12 @@ import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.server.S
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Logger;
 
 public class AuthService extends Messenger implements Runnable {
     private final Socket socket;
@@ -20,7 +24,7 @@ public class AuthService extends Messenger implements Runnable {
 
     static {
         for (int i = 1; i < 9; i++) {
-            userList.put("User" + i, new User("User" + i, "User" + i));
+            userList.put("user" + i, new User("User" + i, "User" + i));
         }
     }
 
@@ -33,28 +37,46 @@ public class AuthService extends Messenger implements Runnable {
     public void run() {
         try {
             Message msg = getMessage();
+
             if (msg.getMessageType() == MessageType.AUTH) {
-                if (server.getClients().get(msg.getFromUserName()) == null) {
+                server.logger.info("Попытка авторизации " + msg.toString());
+                if (server.getClientByUsername(msg.getFromUserName()) == null) {
                     //TODO ActionType.SIGNOUT/SIGNIN
-                    if (signIn(msg.getFromUserName(), msg.getMessage())) {
-                        server.addClient(
-                                msg.getFromUserName(),
-                                new ServerClient(socket, server, msg.getFromUserName()));
+                    User user = signIn(msg.getFromUserName(), msg.getMessage());
+                    if (user != null) {
                         sendSuccessSignIn(msg.getFromUserName());
+
+                        server.addClient(
+                                user,
+                                new ServerClient(socket, server, user));
+
+                        server.logger.info("Пользователь авторизовался " + msg.toString());
                     } else {
                         sendErrorSignIn(msg.getFromUserName());
+
+                        server.logger.warning("Пользователь не авторизован " + msg.toString());
                     }
                 } else {
                     sendSuccessSignIn(msg.getFromUserName());
+
+                    server.logger.info("Пользователь <" +  msg.getFromUserName() + "> уже авторизован");
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
+            server.logger.severe(e.getMessage());
         }
     }
 
-    private boolean signIn(String userName, String password) {
-        return userList.get(userName).checkPassword(password);
+    private User signIn(String userName, String password) {
+        User user = null;
+        try {
+            User _user = userList.get(userName.toLowerCase());
+            if(_user.checkPassword(password)) user = _user;
+        } catch (Exception e) {
+            server.logger.info("Пользователь <" + userName + "> не найден");
+        }
+        return user;
     }
 
     //TODO SIGNOUT
@@ -65,7 +87,7 @@ public class AuthService extends Messenger implements Runnable {
                 .setFromUserName(server.getServerName())
                 .setResponseCode(ResponseCode.OK)
                 .setToUsername(username)
-                .setMessage("Вы авторизованы"));
+                .setMessage("Вы авторизованы. \n Введите \\w !имя пользователя! !сообщение! для отправки личного сообщения."));
     }
 
     private void sendErrorSignIn(String username) throws IOException {

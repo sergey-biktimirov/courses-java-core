@@ -1,7 +1,5 @@
 package ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.messanger;
 
-import com.google.gson.Gson;
-
 import java.io.*;
 
 public abstract class Messenger {
@@ -12,17 +10,21 @@ public abstract class Messenger {
 
 
     public Message getMessage() throws IOException {
-        Message msg;
-        msg = new Gson().fromJson(new DataInputStream(getInputStream()).readUTF(), Message.class);
+        Message msg = new Message().setResponseCode(ResponseCode.ERROR).setMessage("Не удалось прочить сообщение от сервера!");
+        try {
+            ObjectInputStream ois = new ObjectInputStream(getInputStream());
+            msg = (Message) ois.readObject();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
         return msg;
     }
 
     public void sendMessage(Message message) throws IOException {
-        DataOutputStream dos;
-
-        dos = new DataOutputStream(getOutputStream());
-        dos.writeUTF(message.toString());
-        dos.flush();
+        ObjectOutputStream oos;
+        oos = new ObjectOutputStream(getOutputStream());
+        oos.writeObject(message);
+        oos.flush();
     }
 }

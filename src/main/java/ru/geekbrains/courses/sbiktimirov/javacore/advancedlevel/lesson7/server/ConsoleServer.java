@@ -1,16 +1,18 @@
 package ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.server;
 
-import javafx.collections.FXCollections;
-import javafx.collections.MapChangeListener;
-import javafx.collections.ObservableMap;
 import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.app.security.AuthService;
+import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.app.security.User;
 import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.messanger.Message;
 import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.messanger.MessageType;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.ServerSocket;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.UUID;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Logger;
 
 public class ConsoleServer extends Thread {
 
@@ -18,6 +20,13 @@ public class ConsoleServer extends Thread {
     private final String serverName;
     private boolean isClosed = false;
     private final HashMap<String, ServerClient> clients = new HashMap<>();
+    public Logger logger = Logger.getLogger(ConsoleServer.class.getName());
+
+    {
+        ConsoleHandler consoleHandler = new ConsoleHandler();
+        consoleHandler.setEncoding(StandardCharsets.UTF_8.toString());
+        logger.addHandler(consoleHandler);
+    }
 
     public ConsoleServer(String serverName, int port) throws IOException {
         serverSocket = new ServerSocket(port);
@@ -26,7 +35,7 @@ public class ConsoleServer extends Thread {
     }
 
     public ConsoleServer(int port) throws IOException {
-        this(UUID.randomUUID().toString(), port);
+        this("serverName", port);
     }
 
     public void start() {
@@ -38,56 +47,109 @@ public class ConsoleServer extends Thread {
         return serverName;
     }
 
-    private void userConnected(ServerClient serverClient) {
-//        new Thread(() -> {
-            clients.forEach((s, serverClient1) -> {
-                try {
-                    Message msg = new Message()
-                            .setMessageType(MessageType.INFO)
-                            .setMessage(String.format("<%s> подключился к чату", serverClient.getUserName()));
-                    serverClient.sendMessage(msg);
+    public ServerClient getClientByUsername(String username) {
+        return clients.get(username.toLowerCase());
+    }
 
-                    log(msg.toString());
-                } catch (IOException e) {
-                    clients.remove(serverClient.getUserName());
+    public void sendMessage(Message msg) {
+//        new Thread(() -> {
+        String fromUserName = msg.getFromUserName();
+        String toUsername = msg.getToUsername() == null ? "all" : msg.getToUsername();
+
+        try {
+            if (toUsername.equals("all")) {
+                clients.forEach((s, serverClient) -> {
+                    try {
+                        serverClient.sendMessage(msg);
+
+                        logger.info("Сообщение для всех " + msg.toString());
+                    } catch (IOException e) {
+                        logger.info("Не удалось отправить сообщение пользователю " + serverClient.getUserName());
+                        removeClient(serverClient.getUserName());
+                    }
+                });
+            } else {
+                ServerClient fromClient = getClientByUsername(fromUserName);
+                ServerClient toClient = getClientByUsername(toUsername);
+
+                Message clbckMsg = new Message()
+                        .setFromUserName(fromUserName)
+                        .setToUsername(fromUserName)
+                        .setMessage(msg.getMessage())
+                        .setMessageType(MessageType.MESSAGE);
+
+                fromClient.sendMessage(clbckMsg);
+
+                if (toClient == null) {
+                    String _msg = "Пользователь <" + toUsername + "> не найден среди клиентов";
+                    Message infMsg = new Message()
+                            .setFromUserName(getServerName())
+                            .setToUsername(fromUserName)
+                            .setMessage(_msg)
+                            .setMessageType(MessageType.INFO);
+
+                    fromClient.sendMessage(infMsg);
+
+                    logger.warning(_msg);
+                } else {
+                    toClient.sendMessage(msg);
+                    logger.info("Сообщение для <" + msg.getToUsername() + "> -> " + msg.toString());
                 }
-            });
+            }
+        } catch (IOException e) {
+            logger.severe(e.getMessage());
+        }
 //        }).start();
     }
 
-    private void userDisconnected(ServerClient serverClient) {
-        new Thread(() -> {
-            getClients().forEach((s, serverClient1) -> {
-                try {
-                    Message msg = new Message()
-                            .setMessageType(MessageType.INFO)
-                            .setMessage(String.format("<%s> подключился вышел из чата", serverClient.getUserName()));
-                    serverClient.sendMessage(msg);
+    private void userConnected(ServerClient serverClient) {
+        String _msg = "<" + serverClient.getUserName() + "> подключился к чату";
 
-                    log(msg.toString());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
-        }).start();
+        Message msg = new Message()
+                .setMessageType(MessageType.INFO)
+                .setMessage(_msg);
+
+        sendMessage(msg);
+
+        logger.info(_msg);
     }
 
-    synchronized public void addClient(String username, ServerClient serverClient) {
-        clients.put(serverClient.getUserName(), serverClient);
+    private void userDisconnected(String username) {
+        String _msg = "<" + username + "> вышел из чата";
+
+        Message msg = new Message()
+                .setMessageType(MessageType.INFO)
+                .setMessage(_msg);
+
+        sendMessage(msg);
+
+        logger.info(_msg);
+    }
+
+    synchronized public void addClient(User user, ServerClient serverClient) {
+        String username = user.getUsername();
+        clients.put(username.toLowerCase(), serverClient);
+
         userConnected(serverClient);
+
+        logger.info("Пользователь <" + username + "> добавлен в список");
+    }
+
+    synchronized public void removeClient(String username) {
+        clients.remove(username.toLowerCase());
+
+        userDisconnected(username);
+
+        logger.info("Пользователь <" + username + "> удален из списка");
     }
 
     synchronized public HashMap<String, ServerClient> getClients() {
         return clients;
     }
 
-    public static void log(String s) {
-        System.out.println("LOG: " + s);
-    }
-
     @Override
     public void run() {
-        System.out.println("Сервер запущен.");
+        logger.info("Сервер запущен.");
         while (!isClosed) {
             try {
                 new Thread(new AuthService(serverSocket.accept(), this)).start();

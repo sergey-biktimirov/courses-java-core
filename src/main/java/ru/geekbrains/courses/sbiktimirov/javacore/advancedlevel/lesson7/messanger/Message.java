@@ -2,7 +2,9 @@ package ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.messang
 
 import com.google.gson.Gson;
 
-public class Message {
+import java.io.Serializable;
+
+public class Message implements Serializable {
     private String fromUserName;
     private String toUsername;
     private String message;

@@ -4,6 +4,9 @@ plugins {
     id 'com.gluonhq.client-gradle-plugin' version '0.1.35'
 }
 
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+
 repositories {
     mavenCentral()
     maven {
