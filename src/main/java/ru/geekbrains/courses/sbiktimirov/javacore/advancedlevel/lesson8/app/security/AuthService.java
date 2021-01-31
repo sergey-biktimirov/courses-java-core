@@ -1,21 +1,17 @@
-package ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.app.security;
+package ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson8.app.security;
 
-import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.messanger.Message;
-import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.messanger.MessageType;
-import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.messanger.Messenger;
-import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.messanger.ResponseCode;
-import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.server.ConsoleServer;
-import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.server.ServerClient;
+import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson8.messanger.Message;
+import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson8.messanger.MessageType;
+import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson8.messanger.Messenger;
+import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson8.messanger.ResponseCode;
+import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson8.server.ConsoleServer;
+import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson8.server.ServerClient;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.Logger;
+import java.util.concurrent.*;
 
 public class AuthService extends Messenger implements Runnable {
     private final Socket socket;
@@ -35,8 +31,43 @@ public class AuthService extends Messenger implements Runnable {
 
     @Override
     public void run() {
+        Message msg = null;
         try {
-            Message msg = getMessage();
+            //TODO >> Удалить, так как не имеет смысла в ожидании подключения,
+            // ведь клиент чата подключается вместе с авторизацией
+            //TODO >> Убрать комментарий после удаления кода написанного ниже.
+            /*Message msg = getMessage();*/
+            //TODO <<
+            Callable<Message> authTask = this::getMessage;
+            ExecutorService authExecutorService = Executors.newSingleThreadExecutor();
+            Future<Message> auth = authExecutorService.submit(authTask);
+
+            try {
+                authExecutorService.shutdown();
+                authExecutorService.awaitTermination(120, TimeUnit.SECONDS);
+                if (auth.isDone()) {
+                    msg = auth.get();
+                }
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            } finally {
+                authExecutorService.shutdown();
+            }
+            if (msg == null) {
+                try {
+                    sendMessage(new Message()
+                            .setMessageType(MessageType.AUTH)
+                            .setResponseCode(ResponseCode.ERROR)
+                            .setMessage("Истекло время ожидания подключения, сервер разорвал соединение.")
+                    );
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                socket.close();
+                return;
+            }
+            //TODO <<
 
             if (msg.getMessageType() == MessageType.AUTH) {
                 server.logger.info("Попытка авторизации " + msg.toString());
@@ -59,7 +90,7 @@ public class AuthService extends Messenger implements Runnable {
                 } else {
                     sendSuccessSignIn(msg.getFromUserName());
 
-                    server.logger.info("Пользователь <" +  msg.getFromUserName() + "> уже авторизован");
+                    server.logger.info("Пользователь <" + msg.getFromUserName() + "> уже авторизован");
                 }
             }
         } catch (IOException e) {
@@ -72,7 +103,7 @@ public class AuthService extends Messenger implements Runnable {
         User user = null;
         try {
             User _user = userList.get(userName.toLowerCase());
-            if(_user.checkPassword(password)) user = _user;
+            if (_user.checkPassword(password)) user = _user;
         } catch (Exception e) {
             server.logger.info("Пользователь <" + userName + "> не найден");
         }

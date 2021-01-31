@@ -1,15 +1,13 @@
-package ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.server;
+package ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson8.server;
 
-import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.app.security.AuthService;
-import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.app.security.User;
-import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.messanger.Message;
-import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.messanger.MessageType;
+import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson8.app.security.AuthService;
+import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson8.app.security.User;
+import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson8.messanger.Message;
+import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson8.messanger.MessageType;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.ServerSocket;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Logger;
@@ -52,54 +50,54 @@ public class ConsoleServer extends Thread {
     }
 
     public void sendMessage(Message msg) {
-//        new Thread(() -> {
-        String fromUserName = msg.getFromUserName();
-        String toUsername = msg.getToUsername() == null ? "all" : msg.getToUsername();
+        new Thread(() -> {
+            String fromUserName = msg.getFromUserName();
+            String toUsername = msg.getToUsername() == null ? "all" : msg.getToUsername();
 
-        try {
-            if (toUsername.equals("all")) {
-                clients.forEach((s, serverClient) -> {
-                    try {
-                        serverClient.sendMessage(msg);
+            try {
+                if (toUsername.equals("all")) {
+                    clients.forEach((s, serverClient) -> {
+                        try {
+                            serverClient.sendMessage(msg);
 
-                        logger.info("Сообщение для всех " + msg.toString());
-                    } catch (IOException e) {
-                        logger.info("Не удалось отправить сообщение пользователю " + serverClient.getUserName());
-                        removeClient(serverClient.getUserName());
-                    }
-                });
-            } else {
-                ServerClient fromClient = getClientByUsername(fromUserName);
-                ServerClient toClient = getClientByUsername(toUsername);
-
-                Message clbckMsg = new Message()
-                        .setFromUserName(fromUserName)
-                        .setToUsername(fromUserName)
-                        .setMessage(msg.getMessage())
-                        .setMessageType(MessageType.MESSAGE);
-
-                fromClient.sendMessage(clbckMsg);
-
-                if (toClient == null) {
-                    String _msg = "Пользователь <" + toUsername + "> не найден среди клиентов";
-                    Message infMsg = new Message()
-                            .setFromUserName(getServerName())
-                            .setToUsername(fromUserName)
-                            .setMessage(_msg)
-                            .setMessageType(MessageType.INFO);
-
-                    fromClient.sendMessage(infMsg);
-
-                    logger.warning(_msg);
+                            logger.info("Сообщение для всех " + msg.toString());
+                        } catch (IOException e) {
+                            logger.info("Не удалось отправить сообщение пользователю " + serverClient.getUserName());
+                            removeClient(serverClient.getUserName());
+                        }
+                    });
                 } else {
-                    toClient.sendMessage(msg);
-                    logger.info("Сообщение для <" + msg.getToUsername() + "> -> " + msg.toString());
+                    ServerClient fromClient = getClientByUsername(fromUserName);
+                    ServerClient toClient = getClientByUsername(toUsername);
+
+                    Message clbckMsg = new Message()
+                            .setFromUserName(fromUserName)
+                            .setToUsername(fromUserName)
+                            .setMessage(msg.getMessage())
+                            .setMessageType(MessageType.MESSAGE);
+
+                    fromClient.sendMessage(clbckMsg);
+
+                    if (toClient == null) {
+                        String _msg = "Пользователь <" + toUsername + "> не найден среди клиентов";
+                        Message infMsg = new Message()
+                                .setFromUserName(getServerName())
+                                .setToUsername(fromUserName)
+                                .setMessage(_msg)
+                                .setMessageType(MessageType.INFO);
+
+                        fromClient.sendMessage(infMsg);
+
+                        logger.warning(_msg);
+                    } else {
+                        toClient.sendMessage(msg);
+                        logger.info("Сообщение для <" + msg.getToUsername() + "> -> " + msg.toString());
+                    }
                 }
+            } catch (IOException e) {
+                logger.severe(e.getMessage());
             }
-        } catch (IOException e) {
-            logger.severe(e.getMessage());
-        }
-//        }).start();
+        }).start();
     }
 
     private void userConnected(ServerClient serverClient) {
@@ -143,13 +141,10 @@ public class ConsoleServer extends Thread {
         logger.info("Пользователь <" + username + "> удален из списка");
     }
 
-    synchronized public HashMap<String, ServerClient> getClients() {
-        return clients;
-    }
-
     @Override
     public void run() {
         logger.info("Сервер запущен.");
+        //TODO Обработка isClosed
         while (!isClosed) {
             try {
                 new Thread(new AuthService(serverSocket.accept(), this)).start();

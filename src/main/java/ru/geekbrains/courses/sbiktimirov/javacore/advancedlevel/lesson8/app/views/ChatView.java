@@ -1,4 +1,4 @@
-package ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.app.views;
+package ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson8.app.views;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
@@ -12,13 +12,12 @@ public class ChatView {
             BorderPane view = loader.load();
 
             return view;
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             BorderPane view = new BorderPane();
             return view;
         }
     }
-
 
 
 }

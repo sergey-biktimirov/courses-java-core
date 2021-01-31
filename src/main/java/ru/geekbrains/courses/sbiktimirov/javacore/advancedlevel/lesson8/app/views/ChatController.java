@@ -1,4 +1,4 @@
-package ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.app.views;
+package ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson8.app.views;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -7,11 +7,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.app.App;
-import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.messanger.Message;
-import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.messanger.MessageType;
-import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.messanger.Messenger;
-import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.messanger.ResponseCode;
+import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson8.app.App;
+import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson8.messanger.Message;
+import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson8.messanger.MessageType;
+import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson8.messanger.Messenger;
+import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson8.messanger.ResponseCode;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -77,7 +77,9 @@ public class ChatController extends Messenger {
 
     public void connect() {
         try {
-            socket = new Socket("localhost", 5000);
+            if (socket == null || socket.isClosed()) {
+                socket = new Socket("localhost", 5000);
+            }
 
             Message msg = new Message()
                     .setFromUserName(loginField.getText())
@@ -129,7 +131,7 @@ public class ChatController extends Messenger {
         new Thread(() -> {
             while (!App.isClosed()) {
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -188,11 +190,13 @@ public class ChatController extends Messenger {
 
             if (msg.getMessageType() == MessageType.INFO) {
                 message = "Инфо! : " + msg.getMessage();
-            } else {
+            } else if (msg.getMessageType() == MessageType.MESSAGE) {
                 String fromUser = msg.getFromUserName().toLowerCase().equals(loginField.getText().toLowerCase())
                         ? "            Я"
                         : msg.getFromUserName();
                 message = "<" + fromUser + ">: " + msg.getMessage();
+            } else {
+                message = msg.getMessageType() + " " + msg.getResponseCode() + " :" + msg.getMessage();
             }
 
             msgList.add(message);
@@ -203,6 +207,7 @@ public class ChatController extends Messenger {
 
     @FXML
     public void initialize() {
+
         chatContent.setItems(msgList);
 
         sendMsgButton.setOnAction(event -> sendMessage());
@@ -218,6 +223,17 @@ public class ChatController extends Messenger {
         );
 
         connectButton.setOnAction(event -> connect());
+        //TODO >> Удалить, так как не имеет смысла в ожидании подключения,
+        // ведь клиент чата подключается вместе с авторизацией
+        try {
+            socket = new Socket("localhost", 5000);
+        } catch (IOException e) {
+            setClosedConnection(true);
+            e.printStackTrace();
+        }
+
+        startReader();
+        //TODO <<
     }
 
     @Override

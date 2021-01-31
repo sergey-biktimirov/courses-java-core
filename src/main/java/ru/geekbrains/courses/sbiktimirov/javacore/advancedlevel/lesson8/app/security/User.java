@@ -1,4 +1,4 @@
-package ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.app.security;
+package ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson8.app.security;
 
 public class User {
     private final String username;
@@ -13,7 +13,7 @@ public class User {
         return username;
     }
 
-    public boolean checkPassword(String password){
+    public boolean checkPassword(String password) {
         return this.password.equals(password);
     }
 }
