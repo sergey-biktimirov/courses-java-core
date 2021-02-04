@@ -58,9 +58,10 @@ public class Main {
         //orangeBox.addFruit(new Apple(1d));
 
     }
+
     /**
      * 1. Написать метод, который меняет два элемента массива местами (массив может быть любого ссылочного типа);
-     * */
+     */
     static <T> T[] swapElements(T[] arr, int fromIndex, int toIndex) {
         T tmp = arr[fromIndex];
         arr[fromIndex] = arr[toIndex];
@@ -71,7 +72,7 @@ public class Main {
 
     /**
      * 2. Написать метод, который преобразует массив в ArrayList;
-     * */
+     */
     static <T> ArrayList<T> toArrayList(T[] arr) {
         return new ArrayList<>(Arrays.asList(arr));
     }

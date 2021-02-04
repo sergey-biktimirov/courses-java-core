@@ -3,6 +3,7 @@ package ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson1.stu
 import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson1.fruit.Fruit;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Box<T extends Fruit> {
@@ -15,11 +16,21 @@ public class Box<T extends Fruit> {
     }
 
     public <F extends T> void addFruit(F... fruit) {
-        for(T f : fruit) {
+        for (T f : fruit) {
             ++fruitCount;
             weight += f.getWeight();
             fruits.add(f);
         }
+    }
+
+    public T takeFruit() {
+        T fruit = null;
+        if (fruitCount > 0) {
+            fruit = fruits.remove(fruits.size() - 1);
+            --fruitCount;
+            weight -= fruit.getWeight();
+        }
+        return fruit;
     }
 
     /*4. Сделать метод getWeight(), который высчитывает вес коробки,
@@ -33,7 +44,7 @@ public class Box<T extends Fruit> {
      true – если их массы равны, false в противоположном случае.
      Можно сравнивать коробки с яблоками и апельсинами;*/
     public boolean compare(Box<Fruit> box) {
-        return this.weight == box.weight;
+        return getWeight() == box.getWeight();
     }
 
     /*6. Написать метод, который позволяет пересыпать фрукты из текущей коробки в другую.
@@ -45,6 +56,10 @@ public class Box<T extends Fruit> {
     }
 
     public List<T> getFruits() {
-        return fruits;
+        return Collections.unmodifiableList(fruits);
+    }
+
+    public int getFruitCount() {
+        return fruitCount;
     }
 }
