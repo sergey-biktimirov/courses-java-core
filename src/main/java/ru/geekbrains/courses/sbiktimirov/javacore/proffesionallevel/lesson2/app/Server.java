@@ -1,6 +1,6 @@
-package ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.app;
+package ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.app;
 
-import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.server.ConsoleServer;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.server.ConsoleServer;
 
 import java.io.IOException;
 

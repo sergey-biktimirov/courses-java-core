@@ -14,11 +14,15 @@ repositories {
     }
 }
 
-mainClassName = 'ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.app.App'
+mainClassName = 'ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.app.App'
 
 dependencies {
+    compile "com.gluonhq:charm-down-common:2.0.1"
+    compile "com.gluonhq:charm-down-desktop:2.0.1"
     compile 'com.gluonhq:charm-glisten:6.0.6'
     compile 'com.google.code.gson:gson:2.8.6'
+    compile 'org.xerial:sqlite-jdbc:3.34.0'
+    compile 'com.zaxxer:HikariCP:4.0.1'
 }
 
 javafx {

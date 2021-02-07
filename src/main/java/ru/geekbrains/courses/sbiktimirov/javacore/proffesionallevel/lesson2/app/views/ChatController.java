@@ -1,4 +1,4 @@
-package ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.app.views;
+package ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.app.views;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -7,11 +7,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.app.App;
-import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.messanger.Message;
-import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.messanger.MessageType;
-import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.messanger.Messenger;
-import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.messanger.ResponseCode;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.app.App;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.messanger.Message;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.messanger.MessageType;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.messanger.Messenger;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.messanger.ResponseCode;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -55,7 +55,7 @@ public class ChatController extends Messenger {
         String text = msgTextField.getText();
         if (text.length() > 0) {
             Message msg = new Message();
-            if (text.startsWith("/w")) {
+            if (text.startsWith("\\w")) {
                 String[] strings = text.split("\\s+");
                 String username = strings[1];
                 String _msg = String.join(" ", Arrays.copyOfRange(strings, 2, strings.length));
@@ -188,11 +188,13 @@ public class ChatController extends Messenger {
 
             if (msg.getMessageType() == MessageType.INFO) {
                 message = "Инфо! : " + msg.getMessage();
-            } else {
+            } else if (msg.getMessageType() == MessageType.MESSAGE) {
                 String fromUser = msg.getFromUserName().toLowerCase().equals(loginField.getText().toLowerCase())
                         ? "            Я"
                         : msg.getFromUserName();
                 message = "<" + fromUser + ">: " + msg.getMessage();
+            } else {
+                message = msg.getMessageType() + " " + msg.getResponseCode() + " :" + msg.getMessage();
             }
 
             msgList.add(message);

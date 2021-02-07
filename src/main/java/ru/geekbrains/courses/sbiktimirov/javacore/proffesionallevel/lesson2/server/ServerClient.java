@@ -1,17 +1,13 @@
-package ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.server;
+package ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.server;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.Logger;
 
-import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.app.security.User;
-import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.messanger.Message;
-import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.messanger.Messenger;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.app.security.User;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.messanger.Message;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.messanger.Messenger;
 
 public class ServerClient extends Messenger {
 

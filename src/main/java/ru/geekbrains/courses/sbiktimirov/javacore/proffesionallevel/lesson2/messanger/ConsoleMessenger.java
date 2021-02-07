@@ -1,4 +1,4 @@
-package ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.messanger;
+package ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.messanger;
 
 import java.io.IOException;
 import java.io.InputStream;

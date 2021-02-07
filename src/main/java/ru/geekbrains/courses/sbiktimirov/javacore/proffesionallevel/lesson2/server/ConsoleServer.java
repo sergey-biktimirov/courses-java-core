@@ -1,15 +1,13 @@
-package ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.server;
+package ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.server;
 
-import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.app.security.AuthService;
-import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.app.security.User;
-import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.messanger.Message;
-import ru.geekbrains.courses.sbiktimirov.javacore.advancedlevel.lesson7.messanger.MessageType;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.app.security.AuthService;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.app.security.User;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.messanger.Message;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.messanger.MessageType;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.ServerSocket;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Logger;
