@@ -14,7 +14,7 @@ public class ChatHistoryManager {
     private final String HIST_PATH = "hist/messages/";
     private BufferedWriter bwr = null;
     private int msgCount = 0;
-    private final int MAX_MESSAGES_IN_FILE = 5;
+    private final int MAX_MESSAGES_IN_FILE = 101;
 
     private FileWriter getFileWriter() throws IOException {
         return new FileWriter(HIST_PATH + System.currentTimeMillis() + ".txt", StandardCharsets.UTF_8);
