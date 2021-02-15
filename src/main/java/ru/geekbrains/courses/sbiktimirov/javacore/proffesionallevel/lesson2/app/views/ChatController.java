@@ -32,6 +32,7 @@ public class ChatController extends Messenger {
     public TextField passwordField;
     public Button connectButton;
     public Label passwordLabel;
+    private static final ChatHistoryManager chatHistoryManager = new ChatHistoryManager();
 
     Logger logger = Logger.getGlobal();
     private boolean isClosedConnection = false;
@@ -46,6 +47,9 @@ public class ChatController extends Messenger {
         }
     }
 
+    synchronized public static ChatHistoryManager getChatHistoryManager() {
+        return chatHistoryManager;
+    }
 
     private final ObservableList<String> msgList = FXCollections.observableArrayList();
 
@@ -183,29 +187,45 @@ public class ChatController extends Messenger {
     }
 
     private void printMessage(Message msg) {
+
+        chatHistoryManager.writeMessageToFile(msg);
+
         Platform.runLater(() -> {
-            String message;
 
-            if (msg.getMessageType() == MessageType.INFO) {
-                message = "Инфо! : " + msg.getMessage();
-            } else if (msg.getMessageType() == MessageType.MESSAGE) {
-                String fromUser = msg.getFromUserName().toLowerCase().equals(loginField.getText().toLowerCase())
-                        ? "            Я"
-                        : msg.getFromUserName();
-                message = "<" + fromUser + ">: " + msg.getMessage();
-            } else {
-                message = msg.getMessageType() + " " + msg.getResponseCode() + " :" + msg.getMessage();
-            }
-
-            msgList.add(message);
+            msgList.add(convertMessage(msg));
 
             chatContent.scrollTo(msgList.size() - 1);
         });
     }
 
+    private String convertMessage(Message msg) {
+        String message;
+
+        if (msg.getMessageType() == MessageType.INFO) {
+            message = "Инфо! : " + msg.getMessage();
+        } else if (msg.getMessageType() == MessageType.MESSAGE) {
+            String fromUser = msg.getFromUserName().toLowerCase().equals(loginField.getText().toLowerCase())
+                    ? "            Я"
+                    : msg.getFromUserName();
+            message = "<" + fromUser + ">: " + msg.getMessage();
+        } else {
+            message = msg.getMessageType() + " " + msg.getResponseCode() + " :" + msg.getMessage();
+        }
+
+        return message;
+    }
+
     @FXML
     public void initialize() {
+
         chatContent.setItems(msgList);
+
+        Message[] hist = chatHistoryManager.readeLastMessagesFromFile();
+        for (Message message : hist) {
+            if (message != null) {
+                msgList.add(convertMessage(message));
+            }
+        }
 
         sendMsgButton.setOnAction(event -> sendMessage());
         sendMsgButton.setDefaultButton(true);

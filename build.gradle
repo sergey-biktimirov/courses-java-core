@@ -23,6 +23,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.6'
     compile 'org.xerial:sqlite-jdbc:3.34.0'
     compile 'com.zaxxer:HikariCP:4.0.1'
+    compile 'commons-io:commons-io:2.6'
 }
 
 javafx {

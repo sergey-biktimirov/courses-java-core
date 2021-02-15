@@ -3,6 +3,7 @@ package ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.app
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.app.views.ChatController;
 import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.app.views.ChatView;
 
 public class App extends Application {
@@ -35,5 +36,12 @@ public class App extends Application {
 
     public static void main(String args[]) {
         launch(args);
+    }
+
+    @Override
+    public void stop() throws Exception {
+        super.stop();
+        ChatController.getChatHistoryManager().closeMessageFileWriter();
+        System.exit(0);
     }
 }
