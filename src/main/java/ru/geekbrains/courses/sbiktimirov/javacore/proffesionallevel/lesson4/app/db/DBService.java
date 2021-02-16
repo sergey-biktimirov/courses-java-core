@@ -1,7 +1,7 @@
-package ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.app.db;
+package ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson4.app.db;
 
 import com.gluonhq.charm.down.common.PlatformFactory;
-import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.app.db.exception.NoAvailableFreeConnectionPoolException;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson4.app.db.exception.NoAvailableFreeConnectionPoolException;
 
 import java.io.File;
 import java.io.IOException;

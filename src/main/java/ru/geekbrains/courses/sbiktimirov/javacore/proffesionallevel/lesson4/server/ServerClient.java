@@ -1,13 +1,13 @@
-package ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.server;
+package ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson4.server;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.app.security.User;
-import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.messanger.Message;
-import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.messanger.Messenger;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson4.app.security.User;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson4.messanger.Message;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson4.messanger.Messenger;
 
 public class ServerClient extends Messenger {
 

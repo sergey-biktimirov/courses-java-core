@@ -1,4 +1,4 @@
-package ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.app.views;
+package ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson4.app.views;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;

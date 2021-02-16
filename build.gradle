@@ -14,7 +14,7 @@ repositories {
     }
 }
 
-mainClassName = 'ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.app.App'
+mainClassName = 'ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson4.app.App'
 
 dependencies {
     compile "com.gluonhq:charm-down-common:2.0.1"
@@ -38,4 +38,11 @@ gluonClient {
         version = "4.0.10"
         services 'display', 'lifecycle', 'statusbar', 'storage'
     }
+}
+
+run {
+
+    systemProperty "file.encoding", "utf-8"
+    systemProperty "gradle.encoding", "utf-8"
+
 }

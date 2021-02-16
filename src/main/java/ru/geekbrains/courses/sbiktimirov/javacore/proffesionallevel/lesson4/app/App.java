@@ -1,10 +1,10 @@
-package ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.app;
+package ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson4.app;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.app.views.ChatController;
-import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.app.views.ChatView;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson4.app.views.ChatController;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson4.app.views.ChatView;
 
 public class App extends Application {
 

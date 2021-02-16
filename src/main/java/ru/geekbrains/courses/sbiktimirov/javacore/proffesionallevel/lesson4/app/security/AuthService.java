@@ -1,14 +1,14 @@
-package ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.app.security;
+package ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson4.app.security;
 
-import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.app.db.DBService;
-import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.app.db.statement.QueryStatement;
-import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.app.db.statement.UpdateStatement;
-import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.messanger.Message;
-import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.messanger.MessageType;
-import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.messanger.Messenger;
-import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.messanger.ResponseCode;
-import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.server.ConsoleServer;
-import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.server.ServerClient;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson4.app.db.DBService;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson4.app.db.statement.QueryStatement;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson4.app.db.statement.UpdateStatement;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson4.messanger.Message;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson4.messanger.MessageType;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson4.messanger.Messenger;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson4.messanger.ResponseCode;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson4.server.ConsoleServer;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson4.server.ServerClient;
 
 import java.io.IOException;
 import java.io.InputStream;

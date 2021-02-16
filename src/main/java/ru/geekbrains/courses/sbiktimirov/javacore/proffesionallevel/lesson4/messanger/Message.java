@@ -1,4 +1,4 @@
-package ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.messanger;
+package ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson4.messanger;
 
 import com.google.gson.Gson;
 

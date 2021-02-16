@@ -1,9 +1,9 @@
-package ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.app.views;
+package ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson4.app.views;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
-import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.messanger.Message;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson4.messanger.Message;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -63,7 +63,7 @@ public class ChatHistoryManager {
         if (files != null) {
             for (int i = files.length - 1; i >= 0; i--) {
                 try {
-                    FileReader fileReader = new FileReader(files[i]);
+                    FileReader fileReader = new FileReader(files[i], StandardCharsets.UTF_8);
                     JsonReader jsonReader = new JsonReader(fileReader);
                     List<Message> messages = new Gson().fromJson(jsonReader, new TypeToken<List<Message>>() {
                     }.getType());
@@ -80,7 +80,7 @@ public class ChatHistoryManager {
                         start++;
                     }
                     if (maxMsgCnt == 0) break;
-                } catch (FileNotFoundException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }

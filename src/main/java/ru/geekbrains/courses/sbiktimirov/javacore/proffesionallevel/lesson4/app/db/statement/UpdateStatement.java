@@ -1,6 +1,6 @@
-package ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.app.db.statement;
+package ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson4.app.db.statement;
 
-import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.app.db.DBService;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson4.app.db.DBService;
 
 import java.sql.*;
 

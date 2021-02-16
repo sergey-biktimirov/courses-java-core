@@ -1,14 +1,16 @@
-package ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.server;
+package ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson4.server;
 
-import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.app.security.AuthService;
-import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.app.security.User;
-import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.messanger.Message;
-import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.messanger.MessageType;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson4.app.security.AuthService;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson4.app.security.User;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson4.messanger.Message;
+import ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson4.messanger.MessageType;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Logger;
 
@@ -17,6 +19,7 @@ public class ConsoleServer extends Thread {
     private final ServerSocket serverSocket;
     private final String serverName;
     private boolean isClosed = false;
+    private ExecutorService executorService = Executors.newFixedThreadPool(30);
     private final HashMap<String, ServerClient> clients = new HashMap<>();
     public Logger logger = Logger.getLogger(ConsoleServer.class.getName());
 
@@ -150,10 +153,12 @@ public class ConsoleServer extends Thread {
         logger.info("Сервер запущен.");
         while (!isClosed) {
             try {
-                new Thread(new AuthService(serverSocket.accept(), this)).start();
+//                new Thread(new AuthService(serverSocket.accept(), this)).start();
+                executorService.execute(new AuthService(serverSocket.accept(), this));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        executorService.shutdown();
     }
 }

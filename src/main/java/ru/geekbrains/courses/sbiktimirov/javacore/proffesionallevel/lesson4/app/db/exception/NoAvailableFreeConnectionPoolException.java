@@ -1,4 +1,4 @@
-package ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson2.app.db.exception;
+package ru.geekbrains.courses.sbiktimirov.javacore.proffesionallevel.lesson4.app.db.exception;
 
 import java.sql.SQLException;
 
